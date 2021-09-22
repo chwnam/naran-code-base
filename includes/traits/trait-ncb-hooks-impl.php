@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! trait_exists( 'NCB_Hooks_Trait' ) ) {
-	trait NCB_Hooks_Trait {
+if ( ! trait_exists( 'NCB_Hooks_Impl' ) ) {
+	trait NCB_Hooks_Impl {
 		/**
 		 * Add action(s)
 		 *
@@ -154,11 +154,7 @@ if ( ! trait_exists( 'NCB_Hooks_Trait' ) ) {
 		 * @return int
 		 */
 		private function get_priority( ?int $priority ): int {
-			if ( is_null( $priority ) ) {
-				$priority = method_exists( $this, 'get_container' ) ? $this->get_container()->get_default_priority() : 10;
-			}
-
-			return $priority;
+			return is_null( $priority ) ? $this->get_container()->get_priority() : $priority;
 		}
 	}
 }

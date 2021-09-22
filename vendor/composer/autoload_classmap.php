@@ -7,4 +7,14 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'NCB_Base_Module' => $baseDir . '/includes/class-ncb-base-module.php',
+    'NCB_Container' => $baseDir . '/includes/class-ncb-container.php',
+    'NCB_EJS_Queue' => $baseDir . '/includes/class-ncb-ejs-queue.php',
+    'NCB_Hooks_Impl' => $baseDir . '/includes/traits/trait-ncb-hooks-impl.php',
+    'NCB_Layout_Plugin' => $baseDir . '/includes/class-ncb-layout-plugin.php',
+    'NCB_Module_Interface' => $baseDir . '/includes/interfaces/interface-ncb-module-interface.php',
+    'NCB_Module_Trait' => $baseDir . '/includes/traits/trait-ncb-module-trait.php',
+    'NCB_Pool' => $baseDir . '/includes/class-ncb-pool.php',
+    'NCB_Render_Impl' => $baseDir . '/includes/traits/trait-ncb-render-impl.php',
+    'NCB_Submodule_Impl' => $baseDir . '/includes/traits/trait-ncb-submodule-impl.php',
 );

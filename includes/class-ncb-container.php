@@ -8,32 +8,57 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'CLASSNAME' ) ) {
-	class NCB_Container implements NCB_Container_Interface, NCB_Module_Interface {
-		use NCB_Submodules_Trait;
-
-		private int $default_priority;
+	class NCB_Container {
+		use NCB_Submodule_Impl;
 
 		private string $id;
 
-		private array $storage = [];
+		private int $priority;
 
 		private string $version;
 
-		public function __construct( array $args = [] ) {
-			$default = [
-				'default_priority' => 10,
-				'id'               => '',
-				'modules'          => [],
-				'type'             => 'plugin',
-				'version'          => '',
-			];
+		private array $storage;
 
-			$args = wp_parse_args( $args, $default );
+		private $layout;
 
-			$this->default_priority = intval( $args['default_priority'] );
-			$this->id               = strval( $args['id'] );
-			$this->modules          = (array) $args['modules'];
-			$this->version          = strval( $args['version'] );
+		public function __construct( string $id ) {
+			$this->id       = $id;
+			$this->priority = 10;
+			$this->version  = '';
+			$this->storage  = [];
+			$this->layout   = null;
+		}
+
+		public function get_container(): self {
+			return $this;
+		}
+
+		public function get_id(): string {
+			return $this->id;
+		}
+
+		public function get_priority(): int {
+			return $this->priority;
+		}
+
+		public function set_priority( int $priority ): self {
+			$this->priority = $priority;
+			return $this;
+		}
+
+		public function set_layout( string $type, ...$args ): self {
+			if ( 'plugin' === $type ) {
+				$this->layout = new NCB_Layout_Plugin( $this, ...$args );
+			}
+			return $this;
+		}
+
+		public function get_template_paths( string $relpath, string $variant, string $ext ): array {
+			return $this->layout->get_template_paths( $relpath, $variant, $ext );
+		}
+
+		public function get_version(): string {
+			return $this->layout->get_version();
 		}
 
 		public function get( string $key, $default = null ) {
@@ -48,43 +73,10 @@ if ( ! class_exists( 'CLASSNAME' ) ) {
 			}
 		}
 
-		public function activation() {
-			do_action( 'ncb_activation' );
-		}
+		public function initialize( array $modules ) {
+			$this->init_modules( $modules );
 
-		public function deactivation() {
-			do_action( 'ncb_activation' );
-		}
-
-		public function get_default_priority(): int {
-			return $this->default_priority;
-		}
-
-		public function get_container(): NCB_Container_Interface {
-			return $this;
-		}
-
-		public function get_id(): string {
-			return $this->id;
-		}
-
-		public function get_version(): string {
-			return $this->version;
-		}
-
-		public function initialize() {
-			$this->init_modules( $this->modules );
-
-			do_action( 'ncb_loaded', $this->get_container() );
-		}
-
-		/**
-		 * @param NCB_Container_Interface $container
-		 *
-		 * @throws Exception
-		 */
-		public function set_container( NCB_Container_Interface $container ) {
-			throw new Exception( 'Container assignment is impossible.' );
+			do_action( 'ncb_initialized', $this->get_id() );
 		}
 	}
 }

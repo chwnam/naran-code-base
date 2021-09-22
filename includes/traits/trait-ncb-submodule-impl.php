@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! trait_exists( 'NCB_Submodules_Trait' ) ) {
-	trait NCB_Submodules_Trait {
+if ( ! trait_exists( 'NCB_Submodule_Impl' ) ) {
+	trait NCB_Submodule_Impl {
 		private array $modules = [];
 
 		/**
@@ -52,16 +52,11 @@ if ( ! trait_exists( 'NCB_Submodules_Trait' ) ) {
 		 * @param array $modules
 		 */
 		protected function init_modules( array $modules ) {
-			$container     = method_exists( $this, 'get_container' ) ? $this->get_container() : null;
 			$this->modules = $modules;
 
 			foreach ( $this->modules as $idx => $module ) {
-				if ( is_string( $module ) && class_exists( $module ) ) {
-					if ( $module instanceof NCB_Module_Interface && $container ) {
-						$this->modules[ $idx ] = new $module( $container );
-					} else {
-						$this->modules[ $idx ] = new $module();
-					}
+				if ( is_string( $module ) && is_subclass_of( $module, NCB_Base_Module::class ) ) {
+					$this->modules[ $idx ] = new $module( $this->get_container() );
 				}
 			}
 		}

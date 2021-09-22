@@ -12,6 +12,16 @@ class ComposerStaticInit4938d2d8e6715c386d4a92f108cdca0f
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'NCB_Base_Module' => __DIR__ . '/../..' . '/includes/class-ncb-base-module.php',
+        'NCB_Container' => __DIR__ . '/../..' . '/includes/class-ncb-container.php',
+        'NCB_EJS_Queue' => __DIR__ . '/../..' . '/includes/class-ncb-ejs-queue.php',
+        'NCB_Hooks_Impl' => __DIR__ . '/../..' . '/includes/traits/trait-ncb-hooks-impl.php',
+        'NCB_Layout_Plugin' => __DIR__ . '/../..' . '/includes/class-ncb-layout-plugin.php',
+        'NCB_Module_Interface' => __DIR__ . '/../..' . '/includes/interfaces/interface-ncb-module-interface.php',
+        'NCB_Module_Trait' => __DIR__ . '/../..' . '/includes/traits/trait-ncb-module-trait.php',
+        'NCB_Pool' => __DIR__ . '/../..' . '/includes/class-ncb-pool.php',
+        'NCB_Render_Impl' => __DIR__ . '/../..' . '/includes/traits/trait-ncb-render-impl.php',
+        'NCB_Submodule_Impl' => __DIR__ . '/../..' . '/includes/traits/trait-ncb-submodule-impl.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

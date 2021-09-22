@@ -8,19 +8,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'NCB_EJS_Queue' ) ) {
-	class NCB_EJS_Queue {
-		use NCB_Render_Trait;
+	class NCB_EJS_Queue extends NCB_Base_Module {
+		use NCB_Render_Impl;
 
 		private array $queue = [];
 
-		public function __construct() {
+		public function __construct( NCB_Container $container ) {
+			parent::__construct( $container );
+
 			if ( is_admin() ) {
 				if ( ! has_action( 'admin_print_footer_scripts', [ $this, 'do_template' ] ) ) {
-					add_action( 'admin_print_footer_scripts', [ $this, 'do_template' ], hws()->get_priority() );
+					add_action( 'admin_print_footer_scripts', [ $this, 'do_template' ], 99999 );
 				}
 			} else {
 				if ( ! has_action( 'wp_print_footer_scripts', [ $this, 'do_template' ] ) ) {
-					add_action( 'wp_print_footer_scripts', [ $this, 'do_template' ], hws()->get_priority() );
+					add_action( 'wp_print_footer_scripts', [ $this, 'do_template' ], 99999 );
 				}
 			}
 		}
