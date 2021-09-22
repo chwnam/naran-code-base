@@ -1,0 +1,22 @@
+{
+  "name": "naran/code-base",
+  "description": "PHP codebase for WordPress themes and plugins.",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "autoload": {
+    "classmap": [
+      "includes"
+    ],
+    "files": [
+      "includes/functions.php"
+    ]
+  },
+  "require": {},
+  "scripts": {
+    "daa": "@composer dump-autoload --classmap-authoritative"
+  },
+  "scripts-descriptions": {
+    "daa": "Alias of `composer dump-autoload --classmap-authoritative`."
+  }
+}

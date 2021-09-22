@@ -1,2 +1,4 @@
-# naran-code-base
-Naran style PHP codebase for WordPress themes and plugins
+# Naran Code Base
+
+PHP codebase for WordPress themes and plugins.
+

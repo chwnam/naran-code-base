@@ -1,0 +1,12 @@
+.DS_Store
+.idea
+.vscode
+
+node_modules
+/vendor/*
+!/vendor/autoload.php
+!/vendor/composer
+
+*.bak
+*.html
+*.log
