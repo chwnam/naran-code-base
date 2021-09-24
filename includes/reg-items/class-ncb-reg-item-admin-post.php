@@ -1,14 +1,14 @@
 <?php
 /**
- *
+ * Naran Code Base: Reg (Registerer) for admin-post.php.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'NCB_Registrable_Submit' ) ) {
-	class NCB_Registrable_Submit implements NCB_Registrable {
+if ( ! class_exists( 'NCB_Reg_Item_Admin_Post' ) ) {
+	class NCB_Reg_Item_Admin_Post implements NCB_Reg_Item {
 		/** @var string */
 		public string $action;
 
@@ -24,12 +24,12 @@ if ( ! class_exists( 'NCB_Registrable_Submit' ) ) {
 			string $action,
 			$callback,
 			$allow_nopriv = false,
-			?int $priority = null
+			int $priority = null
 		) {
 			$this->action       = $action;
 			$this->callback     = $callback;
 			$this->allow_nopriv = $allow_nopriv;
-			$this->priority     = is_null( $priority ) ? hws()->get_priority() : $priority;
+			$this->priority     = $priority;
 		}
 
 		public function register() {

@@ -11,12 +11,8 @@ if ( ! class_exists( 'NCB_Reg_Style' ) ) {
 	class NCB_Reg_Style extends NCB_Module implements NCB_Reg {
 		use NCB_Hooks_Impl;
 
-		public function __construct( NCB_Container $container ) {
-			parent::__construct( $container );
-
-			$this
-				->add_action( 'init', 'register' )
-			;
+		protected function init() {
+			$this->add_action( 'init', 'register' );
 		}
 
 		public function register() {

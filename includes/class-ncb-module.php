@@ -13,10 +13,14 @@ if ( ! class_exists( 'NCB_Module' ) ) {
 
 		public function __construct( NCB_Container $container ) {
 			$this->container = $container;
+			$this->init();
 		}
 
 		public function get_container(): NCB_Container {
 			return $this->container;
+		}
+
+		protected function init() {
 		}
 	}
 }

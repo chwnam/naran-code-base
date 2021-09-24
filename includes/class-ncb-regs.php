@@ -14,25 +14,24 @@ if ( ! class_exists( 'NCB_Regs' ) ) {
 		public function __construct( NCB_Container $container, array $supports ) {
 			parent::__construct( $container );
 
+			$classes = [
+				'admin_post' => NCB_Reg_Admin_Post::class,
+				'ajax'       => NCB_Reg_Ajax::class,
+				'option'     => NCB_Reg_Option::class,
+				'post_type'  => NCB_Reg_Post_Type::class,
+				'script'     => NCB_Reg_Script::class,
+				'shortcode'  => NCB_Reg_Shortcode::class,
+				'style'      => NCB_Reg_Style::class,
+				'post_meta'  => NCB_Reg_Post_Meta::class,
+				'taxonomy'   => NCB_Reg_Taxonomy::class,
+				'term_meta'  => NCB_Reg_Term_Meta::class,
+			];
+
 			$modules = [];
 
 			foreach ( $supports as $support ) {
-				switch ( $support ) {
-					case 'ajax':
-						$modules['ajax'] = NCB_Reg_Ajax::class;
-						break;
-
-					case 'script':
-						$modules['script'] = NCB_Reg_Script::class;
-						break;
-
-					case 'shortcode':
-						$modules['shortcode'] = NCB_Reg_Shortcode::class;
-						break;
-
-					case 'style':
-						$modules['style'] = NCB_Reg_Style::class;
-						break;
+				if ( isset( $classes[ $support ] ) ) {
+					$modules[ $support ] = $classes[ $support ];
 				}
 			}
 

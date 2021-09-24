@@ -7,15 +7,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'NCB_EJS_Queue' ) ) {
-	class NCB_EJS_Queue extends NCB_Module {
+if ( ! class_exists( 'NCB_Ejs_Queue' ) ) {
+	class NCB_Ejs_Queue extends NCB_Module {
 		use NCB_Render_Impl;
 
 		private array $queue = [];
 
-		public function __construct( NCB_Container $container ) {
-			parent::__construct( $container );
-
+		protected function init() {
 			if ( is_admin() ) {
 				if ( ! has_action( 'admin_print_footer_scripts', [ $this, 'do_template' ] ) ) {
 					add_action( 'admin_print_footer_scripts', [ $this, 'do_template' ], 99999 );

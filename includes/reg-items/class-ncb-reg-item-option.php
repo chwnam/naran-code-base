@@ -1,40 +1,40 @@
 <?php
 /**
- * Option registrable
+ * Naran Code Base: Reg (Registerer) item for options.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'NCB_Registrable_Option' ) ) {
+if ( ! class_exists( 'NCB_Reg_Item_Option' ) ) {
 	/**
-	 * Class NCB_Registrable_Option
+	 * Class NCB_Reg_Item_Option
 	 *
-	 * @property-read string        $type
-	 * @property-read string        $group
-	 * @property-read string        $description
-	 * @property-read callable|null $sanitize_callback
-	 * @property-read bool          $show_in_rest
-	 * @property-read mixed         $default
+	 * @property string        $type
+	 * @property string        $group
+	 * @property string        $description
+	 * @property callable|null $sanitize_callback
+	 * @property bool          $show_in_rest
+	 * @property mixed         $default
 	 */
-	class NCB_Registrable_Option implements NCB_Registrable {
+	class NCB_Reg_Item_Option implements NCB_Reg_Item {
 		private static array $options = [];
 
 		private string $option_group;
 
 		private string $option_name;
 
-		public array $args;
+		private array $args;
 
-		public static function factory( string $option_name ): ?NCB_Registrable_Option {
+		public static function factory( string $option_name ): ?NCB_Reg_Item_Option {
 			global $wp_registered_settings;
 
 			if ( isset( $wp_registered_settings[ $option_name ] ) ) {
 				if ( ! isset( static::$options[ $option_name ] ) ) {
 					$args = $wp_registered_settings[ $option_name ];
 
-					static::$options[ $option_name ] = new NCB_Registrable_Option(
+					static::$options[ $option_name ] = new NCB_Reg_Item_Option(
 						$args['group'],
 						$option_name,
 						$args['autoload']
@@ -77,11 +77,17 @@ if ( ! class_exists( 'NCB_Registrable_Option' ) ) {
 			return $this->args[ $prop ] ?? null;
 		}
 
+		/**
+		 * @param string $prop
+		 * @param mixed  $value
+		 */
+		public function __set( string $prop, $value ) {
+			$this->args[ $prop ] = $value;
+		}
+
 		public function register() {
 			if ( $this->option_group && $this->option_name ) {
-				if ( $this->args['sanitize_callback'] ) {
-					$this->args['sanitize_callback'] = hws_parse_callback( $this->args['sanitize_callback'] );
-				}
+
 				register_setting( $this->option_group, $this->option_name, $this->args );
 			}
 		}

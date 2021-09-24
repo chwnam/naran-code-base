@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'NCB_Reg_Item_AJAX' ) ) {
-	class NCB_Reg_Item_AJAX implements NCB_Reg_Item {
+if ( ! class_exists( 'NCB_Reg_Item_Ajax' ) ) {
+	class NCB_Reg_Item_Ajax implements NCB_Reg_Item {
 		/** @var string */
 		public string $action;
 
@@ -27,7 +27,7 @@ if ( ! class_exists( 'NCB_Reg_Item_AJAX' ) ) {
 			$callback,
 			$allow_nopriv = false,
 			bool $is_wc_ajax = false,
-			?int $priority = null
+			int $priority = null
 		) {
 			$this->action       = $action;
 			$this->callback     = $callback;

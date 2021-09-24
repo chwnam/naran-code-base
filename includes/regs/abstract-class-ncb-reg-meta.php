@@ -1,27 +1,25 @@
 <?php
 /**
- *
+ * Naran Code Base: Reg (Registerer) for metadata.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class_alias( NCB_Registrable_Meta::class, 'NCB_Meta' );
+class_alias( NCB_Reg_Item_Meta::class, 'NCB_Meta' );
 
-if ( ! class_exists( 'NCB_Register_Meta' ) ) {
+if ( ! class_exists( 'NCB_Reg_Meta' ) ) {
 	/**
-	 * Class NCB_Register_Meta
+	 * Class NCB_Reg_Meta
 	 */
-	abstract class NCB_Register_Meta implements NCB_Register {
+	abstract class NCB_Reg_Meta extends NCB_Module implements NCB_Reg {
 		use NCB_Hooks_Impl;
 
-		/**
-		 * @var array<string, string[]>
-		 */
+		/** @var array */
 		private array $fields = [];
 
-		public function __construct() {
+		protected function init() {
 			$this->add_action( 'init', 'register' );
 		}
 
@@ -36,7 +34,16 @@ if ( ! class_exists( 'NCB_Register_Meta' ) ) {
 		public function register(): void {
 			foreach ( $this->get_items() as $idx => $item ) {
 				if ( $item instanceof NCB_Meta ) {
+					if ( $item->sanitize_callback ) {
+						$item->sanitize_callback = $this->get_container()->parse_callback( $item->sanitize_callback );
+					}
+
+					if ( $item->auth_callback ) {
+						$item->auth_callback = $this->get_container()->parse_callback( $item->auth_callback );
+					}
+
 					$item->register();
+
 					$alias = is_int( $idx ) ? $item->get_key() : $idx;
 
 					$this->fields[ $alias ] = [

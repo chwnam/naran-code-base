@@ -1,28 +1,28 @@
 <?php
 /**
- *
+ * Naran Code Base: Reg (Registerer) item for metadata.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'NCB_Registrable_Meta' ) ) {
+if ( ! class_exists( 'NCB_Reg_Item_Meta' ) ) {
 	/**
 	 * Class NCB_Registrable_Meta
 	 *
 	 * Meta field wrapper class.
 	 *
-	 * @property-read string    $object_subtype
-	 * @property-read string    $type
-	 * @property-read string    $description
-	 * @property-read mixed     $default
-	 * @property-read bool      $single
-	 * @property-read ?callable $sanitize_callback
-	 * @property-read ?callable $auth_callback
-	 * @property-read bool      $show_in_rest
+	 * @property string    $object_subtype
+	 * @property string    $type
+	 * @property string    $description
+	 * @property mixed     $default
+	 * @property bool      $single
+	 * @property ?callable $sanitize_callback
+	 * @property ?callable $auth_callback
+	 * @property bool      $show_in_rest
 	 */
-	class NCB_Registrable_Meta implements NCB_Registrable {
+	class NCB_Reg_Item_Meta implements NCB_Reg_Item {
 		private static array $meta = [];
 
 		private string $object_type = '';
@@ -36,14 +36,14 @@ if ( ! class_exists( 'NCB_Registrable_Meta' ) ) {
 		 * @param string $meta_key       Meta key name.
 		 * @param string $object_subtype Subtype.
 		 *
-		 * @return ?NCB_Registrable_Meta
+		 * @return ?NCB_Reg_Item_Meta
 		 * @see register_meta()
 		 */
 		public static function factory(
 			string $object_type,
 			string $object_subtype,
 			string $meta_key
-		): ?NCB_Registrable_Meta {
+		): ?NCB_Reg_Item_Meta {
 			global $wp_meta_keys;
 
 			if ( isset( $wp_meta_keys[ $object_type ][ $object_subtype ][ $meta_key ] ) ) {
@@ -51,7 +51,7 @@ if ( ! class_exists( 'NCB_Registrable_Meta' ) ) {
 
 				if ( ! isset( static::$meta[ $object_type ][ $object_subtype ][ $meta_key ] ) ) {
 					static::$meta[ $object_type ][ $object_subtype ][ $meta_key ] =
-						new NCB_Registrable_Meta( $object_type, $meta_key, $args );
+						new NCB_Reg_Item_Meta( $object_type, $meta_key, $args );
 				}
 
 				return static::$meta[ $object_type ][ $object_subtype ][ $meta_key ];
@@ -89,12 +89,6 @@ if ( ! class_exists( 'NCB_Registrable_Meta' ) ) {
 
 		public function register() {
 			if ( $this->object_type && $this->get_key() ) {
-				if ( $this->args['sanitize_callback'] ) {
-					$this->args['sanitize_callback'] = hws_parse_callback( $this->args['sanitize_callback'] );
-				}
-				if ( $this->args['auth_callback'] ) {
-					$this->args['auth_callback'] = hws_parse_callback( $this->args['auth_callback'] );
-				}
 				register_meta( $this->object_type, $this->meta_key, $this->args );
 			}
 		}
@@ -104,12 +98,26 @@ if ( ! class_exists( 'NCB_Registrable_Meta' ) ) {
 		 *
 		 * @param string $prop
 		 *
-		 * @return mixed|string|null
+		 * @return mixed
 		 *
 		 * @see register_meta()
 		 */
 		public function __get( string $prop ) {
 			return $this->args[ $prop ] ?? null;
+		}
+
+		/**
+		 * Set $args value.
+		 *
+		 * @param string $prop
+		 * @param mixed  $value
+		 *
+		 * @return void
+		 *
+		 * @see register_meta()
+		 */
+		public function __set( string $prop, $value ) {
+			$this->args[ $prop ] = $value;
 		}
 
 		/**

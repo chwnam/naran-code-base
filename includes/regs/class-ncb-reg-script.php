@@ -13,10 +13,10 @@ if ( ! class_exists( 'NCB_Reg_Script' ) ) {
 
 		public function __construct( NCB_Container $container ) {
 			parent::__construct( $container );
+		}
 
-			$this
-				->add_action( 'init', 'register' )
-			;
+		protected function init() {
+			$this->add_action( 'init', 'register' );
 		}
 
 		public function register() {

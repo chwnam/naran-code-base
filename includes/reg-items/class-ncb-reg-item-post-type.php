@@ -1,14 +1,14 @@
 <?php
 /**
- * Post type registrable.
+ * Naran Code Base: Reg (Registerer) item for custom post types.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'NCB_Registrable_Post_Type' ) ) {
-	class NCB_Registrable_Post_Type implements NCB_Registrable {
+if ( ! class_exists( 'NCB_Reg_Item_Post_Type' ) ) {
+	class NCB_Reg_Item_Post_Type implements NCB_Reg_Item {
 		public string $post_type;
 
 		public array $args;

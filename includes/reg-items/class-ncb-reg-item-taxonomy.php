@@ -1,14 +1,14 @@
 <?php
 /**
- * Taxonomy registrable.
+ * Naran Code Base: Reg (Registerer) item for taxonomies.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'NCB_Registrable_Taxonomy' ) ) {
-	class NCB_Registrable_Taxonomy implements NCB_Registrable {
+if ( ! class_exists( 'NCB_Reg_Item_Taxonomy' ) ) {
+	class NCB_Reg_Item_Taxonomy implements NCB_Reg_Item {
 		public string $taxonomy;
 
 		public array $object_type;

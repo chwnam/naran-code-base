@@ -21,7 +21,6 @@ if ( ! class_exists( 'NCB_Layout_Plugin' ) ) {
 
 			register_activation_hook( $this->get_main_file(), [ $this, 'activation' ] );
 			register_deactivation_hook( $this->get_main_file(), [ $this, 'deactivation' ] );
-			register_uninstall_hook( $this->get_main_file(), [ $this, 'uninstall' ] );
 		}
 
 		public function get_main_file(): string {
@@ -34,10 +33,6 @@ if ( ! class_exists( 'NCB_Layout_Plugin' ) ) {
 
 		public function deactivation() {
 			do_action( 'ncb_deactivation', $this->get_container()->get_id() );
-		}
-
-		public function uninstall() {
-			do_action( 'ncb_uninstall', $this->get_container()->get_id() );
 		}
 
 		public function get_root_path(): string {

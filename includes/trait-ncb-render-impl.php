@@ -76,7 +76,7 @@ if ( ! trait_exists( 'NCB_Render_Impl' ) ) {
 			$ejs = $this->get_container()->get( 'ncb:ejs' );
 
 			if ( ! $ejs ) {
-				$ejs = new NCB_EJS_Queue( $this->get_container() );
+				$ejs = new NCB_Ejs_Queue( $this->get_container() );
 				$this->get_container()->set( 'ncb:ejs', $ejs );
 			}
 

@@ -17,9 +17,7 @@ if ( ! class_exists( 'NCB_Reg_Shortcode' ) ) {
 
 		private array $found_tags;
 
-		public function __construct( NCB_Container $container ) {
-			parent::__construct( $container );
-
+		protected function init() {
 			$this
 				->add_action( 'init', 'register' )
 				->add_action( 'wp', 'handle_header_action' )

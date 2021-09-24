@@ -5,7 +5,7 @@
  * Author:            changwoo
  * Author URI:        https://blog.changwoo.pe.kr
  * Plugin URI:        https://github.com/chwnam/naran-code-base
- * Version:           0.0.0
+ * Version:           1.0.0
  * Requires PHP:      7.4
  * Requires at least: 5.5.0
  * Text Domain:       naran-code-base
