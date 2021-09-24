@@ -18,13 +18,13 @@ if ( ! class_exists( 'NCB_Reg_Item_Admin_Post' ) ) {
 		/** @var string|bool */
 		public $allow_nopriv;
 
-		public int $priority;
+		public ?int $priority;
 
 		public function __construct(
 			string $action,
 			$callback,
 			$allow_nopriv = false,
-			int $priority = null
+			?int $priority = null
 		) {
 			$this->action       = $action;
 			$this->callback     = $callback;

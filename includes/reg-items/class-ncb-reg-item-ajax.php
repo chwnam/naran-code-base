@@ -20,14 +20,14 @@ if ( ! class_exists( 'NCB_Reg_Item_Ajax' ) ) {
 
 		public bool $is_wc_ajax;
 
-		public int $priority;
+		public ?int $priority;
 
 		public function __construct(
 			string $action,
 			$callback,
 			$allow_nopriv = false,
 			bool $is_wc_ajax = false,
-			int $priority = null
+			?int $priority = null
 		) {
 			$this->action       = $action;
 			$this->callback     = $callback;
