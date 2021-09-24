@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'NCB_Layout_Plugin' ) ) {
-	class NCB_Layout_Plugin extends NCB_Base_Module {
+	class NCB_Layout_Plugin extends NCB_Module implements NCB_Layout {
 		private string $main_file;
 
 		private string $version;
@@ -21,14 +21,11 @@ if ( ! class_exists( 'NCB_Layout_Plugin' ) ) {
 
 			register_activation_hook( $this->get_main_file(), [ $this, 'activation' ] );
 			register_deactivation_hook( $this->get_main_file(), [ $this, 'deactivation' ] );
+			register_uninstall_hook( $this->get_main_file(), [ $this, 'uninstall' ] );
 		}
 
 		public function get_main_file(): string {
 			return $this->main_file;
-		}
-
-		public function get_version(): string {
-			return $this->version;
 		}
 
 		public function activation() {
@@ -39,11 +36,15 @@ if ( ! class_exists( 'NCB_Layout_Plugin' ) ) {
 			do_action( 'ncb_deactivation', $this->get_container()->get_id() );
 		}
 
+		public function uninstall() {
+			do_action( 'ncb_uninstall', $this->get_container()->get_id() );
+		}
+
 		public function get_root_path(): string {
 			return plugin_dir_path( $this->get_main_file() );
 		}
 
-		public function get_root_url(): string {
+		public function get_root_path_uri(): string {
 			return plugin_dir_url( $this->get_main_file() );
 		}
 
@@ -68,6 +69,10 @@ if ( ! class_exists( 'NCB_Layout_Plugin' ) ) {
 			];
 
 			return apply_filters( 'ncb/layout/template_paths', array_filter( $paths ), $this->get_container()->get_id() );
+		}
+
+		public function get_version(): string {
+			return $this->version;
 		}
 	}
 }

@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'NCB_EJS_Queue' ) ) {
-	class NCB_EJS_Queue extends NCB_Base_Module {
+	class NCB_EJS_Queue extends NCB_Module {
 		use NCB_Render_Impl;
 
 		private array $queue = [];

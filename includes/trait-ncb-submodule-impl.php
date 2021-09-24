@@ -55,7 +55,7 @@ if ( ! trait_exists( 'NCB_Submodule_Impl' ) ) {
 			$this->modules = $modules;
 
 			foreach ( $this->modules as $idx => $module ) {
-				if ( is_string( $module ) && is_subclass_of( $module, NCB_Base_Module::class ) ) {
+				if ( is_string( $module ) && is_subclass_of( $module, NCB_Module::class ) ) {
 					$this->modules[ $idx ] = new $module( $this->get_container() );
 				}
 			}

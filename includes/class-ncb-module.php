@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'NCB_Base_Module' ) ) {
-	class NCB_Base_Module {
+if ( ! class_exists( 'NCB_Module' ) ) {
+	class NCB_Module {
 		private NCB_Container $container;
 
 		public function __construct( NCB_Container $container ) {
